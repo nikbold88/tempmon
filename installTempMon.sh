@@ -33,7 +33,7 @@ except KeyboardInterrupt: print("Script end!")
 chmod +x /tmp/dht22.py
 EOF
 # Test the DHT22 script
-python3 /tmp/dht22.py
+sudo python3 /tmp/dht22.py
 ### Setting up InfluxDb and telegraf
 # InfluxDb Installation on Raspberry Pi
 # Telgraf log parser Installation on Raspberry Pi
