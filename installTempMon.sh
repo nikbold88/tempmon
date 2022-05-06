@@ -33,6 +33,35 @@ except KeyboardInterrupt: print("Script end!")
 EOF
 # make the DHT22 script executable
 sudo chmod +x /tmp/dht22.py
+
+# Create logging script
+tee -a /home/pi/logTmp.py <<EOF
+import Adafruit_DHT as adht
+import time
+import logging
+
+logging.basicConfig(filename='temperature.log', filemode='a', format='%(created)f %(message)s', level=logging.INFO)
+
+while True:     
+    h,t = adht.read_retry(adht.DHT22, 4)    
+    logging.info('Temp={0:0.1f} C and Humidity={1:0.1f} %'.format(t, h))
+EOF
+# create script to run /home/pi/logTemp.sh with nohup
+tee -a /home/pi/rundht22.sh <<EOF
+#! /bin/bash
+
+#python3 /home/pi/dht22.py >> /home/pi/temperatures.csv
+nohup python3 /home/pi/logTemp.py &
+EOF
+
+# run the file
+sudo bash /home/pi/rundht22.sh
+
+#Set the script to run at reboot:
+
+line="@reboot /home/pi/rundht22.sh"
+
+
 ### Setting up InfluxDb and telegraf
 # InfluxDb Installation on Raspberry Pi
 wget -qO- https://repos.influxdata.com/influxdb.key | sudo tee /etc/apt/sources.list.d/influxdb.list test $VERSION\_ID = "8" && echo "deb https://repos.influxdata.com/debian jessie stable" | sudo tee /etc/apt/sources.list.d/influxdb.list test $VERSION\_ID = "9" && echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
