@@ -33,6 +33,7 @@ except KeyboardInterrupt: print("Script end!")
 EOF
 # make the DHT22 script executable
 sudo chmod +x /tmp/dht22.py
+echo "Test script created in /tmp/ folder"
 
 # Create logging script
 tee -a /home/pi/logTmp.py <<EOF
@@ -60,6 +61,7 @@ sudo bash /home/pi/rundht22.sh
 #Set the script to run at reboot:
 
 line="@reboot /home/pi/rundht22.sh"
+(crontab -u $(whoami) -l; echo "$line" ) | crontab -u $(whoami) -
 
 
 ### Setting up InfluxDb and telegraf
