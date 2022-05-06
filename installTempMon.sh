@@ -30,10 +30,9 @@ pin)
         print("Failed to get reading. Try again!")
 # Scavenging work after the end of the program
 except KeyboardInterrupt: print("Script end!")
-chmod +x /tmp/dht22.py
 EOF
-# Test the DHT22 script
-sudo python3 /tmp/dht22.py
+# make the DHT22 script executable
+sudo chmod +x /tmp/dht22.py
 ### Setting up InfluxDb and telegraf
 # InfluxDb Installation on Raspberry Pi
 # Telgraf log parser Installation on Raspberry Pi
