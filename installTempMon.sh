@@ -35,6 +35,13 @@ EOF
 sudo chmod +x /tmp/dht22.py
 ### Setting up InfluxDb and telegraf
 # InfluxDb Installation on Raspberry Pi
+wget -qO- https://repos.influxdata.com/influxdb.key | sudo tee /etc/apt/sources.list.d/influxdb.list test $VERSION\_ID = "8" && echo "deb https://repos.influxdata.com/debian jessie stable" | sudo tee /etc/apt/sources.list.d/influxdb.list test $VERSION\_ID = "9" && echo "deb https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+
+sudo apt-get update && sudo apt-get install influxdb
+sudo service influxdb start
+
+#verify influxdb is running with the following command.
+sudo service influxdb status
 # Telgraf log parser Installation on Raspberry Pi
 # Parsing logs on Raspberry Pi using telegraf
 ### Installing Grafana and creating dashboards on the Raspberry Pi
